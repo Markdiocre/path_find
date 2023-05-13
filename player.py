@@ -1,19 +1,20 @@
 import pygame
 from settings import *
+import os
 
+game_folder = os.path.dirname(__file__)
+img_folder = os.path.join(game_folder, "assets")
 
-class Player(pygame.sprite.Sprite):
+class Cat(pygame.sprite.Sprite):
     
     def __init__(self,x,y,speed, surface) -> None:
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load('assets\cat.png').convert_alpha()
+        self.image = pygame.image.load(os.path.join(img_folder,"cat.png")).convert_alpha()
         BOARD[x][y] == 2
         self.x = x
         self.y = y
         self.speed = speed
         self.rect = self.image.get_rect()
-        self.surface = surface
-
         
 
 
@@ -62,29 +63,53 @@ class Player(pygame.sprite.Sprite):
             return False
         return True
     
+    def update(self):
+        self.rect.x = self.x * TILESIZE
+        self.rect.y = self.y * TILESIZE
 
-    def draw(self):
+    # def draw(self):
         
-        self.rect = pygame.Rect(self.x*TILESIZE,self.y*TILESIZE, TILESIZE,TILESIZE)
-        pygame.draw.rect(SCREEN, YELLOW, self.rect)
+    #     self.rect = pygame.Rect(self.x*TILESIZE,self.y*TILESIZE, TILESIZE,TILESIZE)
+    #     pygame.draw.rect(SCREEN, YELLOW, self.rect)
         # self.image.blit( self.surface, self.rect)
 
         
 
-class Cat():
+class Pickle(pygame.sprite.Sprite):
     
     def __init__(self,x,y,speed) -> None:
-        self.rect = pygame.Rect(x*TILESIZE,y*TILESIZE, TILESIZE,TILESIZE)
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load(os.path.join(img_folder,"pickle.png")).convert_alpha()
+        self.rect = self.image.get_rect()
         self.x = x
         self.y = y
         self.speed = speed
         BOARD[x][y] == 4
 
-    def draw(self):
-        self.rect = pygame.Rect(self.x*TILESIZE,self.y*TILESIZE, TILESIZE,TILESIZE)
-        pygame.draw.rect(SCREEN, SKY_BLUE, self.rect)
-
     def move(self,x,y):
         self.x = x
         self.y = y
+
+    def update(self):
+        self.rect.x = self.x * TILESIZE
+        self.rect.y = self.y * TILESIZE
+
+class Wall(pygame.sprite.Sprite):
+    pass
+
+class Fish(pygame.sprite.Sprite):
+    def __init__(self) -> None:
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load(os.path.join(img_folder,"Fish.png")).convert_alpha()
+        self.rect = self.image.get_rect()
+        self.mid_height = (self.image.get_width()/2)
+        self.mid_width = (self.image.get_height()/2)
+
+    def capture_mouse(self,x,y):
+        self.x = x
+        self.y = y
+
+    def update(self):
+        self.rect.x = self.x - (TILESIZE/2)
+        self.rect.y = self.y - (TILESIZE/2)
         
