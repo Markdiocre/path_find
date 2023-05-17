@@ -12,9 +12,14 @@ from path_find import astar
 
 
 def main():
-
+    pygame.mixer.pre_init(44100, 16, 2, 4096)
     pygame.init()
 
+    # backgroud music
+    pygame.mixer.music.load("assets/Music.mp3")
+    pygame.mixer.music.set_volume(0.5)
+    pygame.mixer.music.play(-1)
+    
     #game dimensionsr
     
     running  = True
