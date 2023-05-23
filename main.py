@@ -12,9 +12,14 @@ from path_find import astar
 
 
 def main():
-
+    pygame.mixer.pre_init(44100, 16, 2, 4096)
     pygame.init()
 
+    # backgroud music
+    pygame.mixer.music.load("assets/Music.mp3")
+    pygame.mixer.music.set_volume(0.5)
+    pygame.mixer.music.play(-1)
+    
     #game dimensionsr
     
     running  = True
@@ -53,6 +58,7 @@ def main():
         # Calculate the angle 
         angle_to_mouse = (round(math.degrees(math.atan2(delta.y, delta.x))) + 360) % 360
 
+
         
         
 
@@ -66,9 +72,10 @@ def main():
             
 
             #Tracks a star every second
-            pickle_to_cat_path = astar(BOARD, (pickle.x, pickle.y) ,(cat.x,cat.y))
-            if len(pickle_to_cat_path) > 1:
-                pickle.move(pickle_to_cat_path[1][0],pickle_to_cat_path[1][1])
+            if(random.randint(0,5) != 1): #This line is for balancing the enemy. Moves only if not 1 is selected
+                pickle_to_cat_path = astar(BOARD, (pickle.x, pickle.y) ,(cat.x,cat.y))
+                if len(pickle_to_cat_path) > 1:
+                    pickle.move(pickle_to_cat_path[1][0],pickle_to_cat_path[1][1])
             
             #If the cat ate the player, the player will teleport elsewhere
             if((cat.x,cat.y) == (pickle.x,pickle.y)):
@@ -88,10 +95,13 @@ def main():
         # pickle.draw()
         grid.draw_grid()
 
+        pygame.draw.line(SCREEN, (255,255,255), player_center, mouse_pos, 3)
+
         all_sprite.update()
         all_sprite.draw(SCREEN)
 
         
+
 
         # flip() the display to put your work on screen
         pygame.display.flip()
