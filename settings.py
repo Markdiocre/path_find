@@ -21,8 +21,8 @@ TILESIZE = 32
 #         [0, 0, 0, 0, 1, 0, 0, 0, 0, 0]
 #         ]
 
-BOARD_WIDTH = 10
-BOARD_HEIGHT = 10
+BOARD_WIDTH = 20
+BOARD_HEIGHT = 20
 
 # Define the probability bias for the values
 PROBABILITY_BIAS = {

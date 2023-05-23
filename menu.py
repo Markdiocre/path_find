@@ -1,17 +1,15 @@
 import pygame
 from pygame.locals import *
 import main
+from settings import *
 import os
 
 pygame.init()
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 
-s_width=320
-s_height=320
-screen=pygame.display.set_mode((s_width, s_height))
+screen=pygame.display.set_mode((S_WIDTH, S_HEIGHT))
 BG = pygame.image.load("assets/bg2.png").convert()
-bg_width = BG.get_width()
-bg_rect = BG.get_rect()
+bg_scaled = pygame.transform.scale(BG,(S_WIDTH, S_HEIGHT))
 
 def text_format(message, textFont, textSize, textColor):
     Font=pygame.font.Font(textFont, textSize)
@@ -33,7 +31,6 @@ def main_menu():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-                quit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
                     selected = "start"
@@ -48,7 +45,7 @@ def main_menu():
                         pygame.quit()
                         quit()
 
-        screen.blit(BG, (0, 0))
+        screen.blit(bg_scaled, (0, 0))
         title1=text_format("Albertus", font, 25, "yellow")
         title2=text_format("Adventures", font, 25, "yellow")
         if selected=="start":
@@ -65,10 +62,10 @@ def main_menu():
         start_rect=start.get_rect()
         quit_rect=quit.get_rect()
 
-        screen.blit(title1, (s_width/2 - (title1_rect[2]/2), 50))
-        screen.blit(title2, (s_width/2 - (title2_rect[2]/1.6), 90))
-        screen.blit(start, (s_width/2 - (start_rect[2]/2), 175))
-        screen.blit(quit, (s_width/2 - (quit_rect[2]/2), 225))
+        screen.blit(title1, (S_WIDTH/2 - (title1_rect[2]/2), 50))
+        screen.blit(title2, (S_WIDTH/2 - (title2_rect[2]/1.6), 90))
+        screen.blit(start, (S_WIDTH/2 - (start_rect[2]/2), 175))
+        screen.blit(quit, (S_WIDTH/2 - (quit_rect[2]/2), 225))
         pygame.display.update()
         clock.tick(FPS)
         pygame.display.set_caption("Albertus Adventures")
