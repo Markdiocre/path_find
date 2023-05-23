@@ -16,7 +16,7 @@ def main():
     pygame.init()
 
     # backgroud music
-    pygame.mixer.music.load("assets/Music.mp3")
+    pygame.mixer.music.load("sounds/Music.mp3")
     pygame.mixer.music.set_volume(0.5)
     pygame.mixer.music.play(-1)
     
