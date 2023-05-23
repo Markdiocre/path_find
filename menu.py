@@ -31,20 +31,23 @@ def main_menu():
 
     while menu:
         for event in pygame.event.get():
-            if event.type==pygame.QUIT:
+            if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-            if event.type==pygame.KEYDOWN:
-                if event.key==pygame.K_UP:
-                    selected="start"
-                elif event.key==pygame.K_DOWN:
-                    selected="quit"
-                if event.key==pygame.K_RETURN:
-                    if selected=="start":
-                        os.system('python main.py')
-                    if selected=="quit":
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP:
+                    selected = "start"
+                elif event.key == pygame.K_DOWN:
+                    selected = "quit"
+                if event.key == pygame.K_RETURN:
+                    if selected == "start":
+                        menu = False  # Set menu variable to False to exit the menu loop and close the menu
+                        main.main()  # Start the main game from the imported main module
+
+                    if selected == "quit":
                         pygame.quit()
                         quit()
+
         screen.blit(BG, (0, 0))
         title1=text_format("Albertus", font, 25, "yellow")
         title2=text_format("Adventures", font, 25, "yellow")
