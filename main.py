@@ -22,7 +22,7 @@ def main():
     
 
     grid = Grid()
-    cat = Cat(0,0,1, SCREEN)
+    cat = Cat(1,0,1, SCREEN)
     pickle = Pickle(8,7,1)
     fish = Fish()
 
