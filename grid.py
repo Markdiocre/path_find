@@ -2,7 +2,7 @@ import pygame
 from settings import *
 import os
 
-wall_image = pygame.image.load("assets/wall_sprite.png")
+wall_image = pygame.image.load("assets/wall_sprite2.png")
 wall_image = pygame.transform.scale(wall_image, (TILESIZE, TILESIZE))
 
 
