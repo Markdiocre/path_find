@@ -96,6 +96,16 @@ def main():
                 if event.key == pygame.K_ESCAPE:
                     running = False
 
+            if is_dead:
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_r:
+                        is_dead = False
+                        score = 0
+                        health_bar.hp = health_bar.max_hp
+                        init_point()
+                    elif event.key == pygame.K_q:
+                        running = False
+
         # Game over Screen
         if not is_paused and is_dead:
             settings.blit(background_image, (0, 0))
@@ -103,8 +113,15 @@ def main():
             game_over = font.render("Game Over", True, 'red')
             score_text = font.render(
                 "Your Score: " + str(score), True, 'white')
+            retry_text = font.render(
+                "Press 'R' to Retry", True, 'yellow')
+            quit_text = font.render(
+                "Press 'Q' to Quit", True, 'yellow')
             settings.blit(game_over, (S_WIDTH // 2 - 80, S_HEIGHT // 2 - 90))
             settings.blit(score_text, (S_WIDTH // 2 - 80, S_HEIGHT // 2 - 65))
+            settings.blit(retry_text, (S_WIDTH // 2 - 80, S_HEIGHT // 2 - 40))
+            settings.blit(quit_text, (S_WIDTH // 2 - 80, S_HEIGHT // 2 - 15))
+
 
         if not is_paused and not is_dead:
             clock = pygame.time.get_ticks()
