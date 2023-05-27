@@ -46,8 +46,8 @@ def main_menu():
                         quit()
 
         screen.blit(bg_scaled, (0, 0))
-        title1=text_format("Albertus", font, 25, "yellow")
-        title2=text_format("Adventures", font, 25, "yellow")
+        title1=text_format("Fish, Cats", font, 25, "yellow")
+        title2=text_format("and Mr. Pickles", font, 25, "yellow")
         if selected=="start":
             start=text_format("START", font, 22, "white")
         else:

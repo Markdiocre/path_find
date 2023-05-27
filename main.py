@@ -70,11 +70,7 @@ def main():
 
 
 
-            #Tracks a star every second
-            if(random.randint(0,5) != 1): #This line is for balancing the enemy. Moves only if not 1 is selected
-                pickle_to_cat_path = astar(BOARD, (pickle.x, pickle.y) ,(cat.x,cat.y))
-                if len(pickle_to_cat_path) > 1:
-                    pickle.move(pickle_to_cat_path[1][0],pickle_to_cat_path[1][1])
+            
 
             
 
@@ -85,12 +81,11 @@ def main():
                 if angle_to_mouse <= 45 or angle_to_mouse >= 315: cat.move_right()
                 move_next_time = clock + 500
 
-                
-
                 #Tracks a star every second
-                pickle_to_cat_path = astar(BOARD, (pickle.x, pickle.y) ,(cat.x,cat.y))
-                if len(pickle_to_cat_path) > 1:
-                    pickle.move(pickle_to_cat_path[1][0],pickle_to_cat_path[1][1])
+                if(random.randint(0,5) != 1): #This line is for balancing
+                    pickle_to_cat_path = astar(BOARD, (pickle.x, pickle.y) ,(cat.x,cat.y))
+                    if len(pickle_to_cat_path) > 1:
+                        pickle.move(pickle_to_cat_path[1][0],pickle_to_cat_path[1][1])
                 
                 #If the cat ate the player, the player will teleport elsewhere
                 if((cat.x,cat.y) == (pickle.x,pickle.y)):
@@ -111,21 +106,18 @@ def main():
             grid.draw_grid()
 
             all_sprite.update()
+
+            pygame.draw.line(SCREEN, (255,255,255), player_center, mouse_pos, 3)
             all_sprite.draw(SCREEN)
 
             
 
+            
+
             # flip() the display to put your work on screen
+            
             pygame.display.flip()
-        pygame.draw.line(SCREEN, (255,255,255), player_center, mouse_pos, 3)
-
-        all_sprite.update()
-        all_sprite.draw(SCREEN)
-
-            # limits FPS to 60
-            # dt is delta time in seconds since last frame, used for framerate-
-            # independent physics.
-            dt = CLOCK.tick(60) / 1000
+            
         
         # Click P to pause
         if is_paused:
@@ -152,10 +144,7 @@ def main():
         # flip() the display to put your work on screen
         pygame.display.flip()
 
-        # limits FPS to 60
-        # dt is delta time in seconds since last frame, used for framerate-
-        # independent physics.
-        dt = CLOCK.tick(60) / 1000
+        
 
 
 if __name__ == '__main__':
