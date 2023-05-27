@@ -33,7 +33,7 @@ def main():
     is_visible = True
 
     grid = Grid()
-    cat = Cat(0,0,1, SCREEN)
+    cat = Cat(1,0,1, SCREEN)
     pickle = Pickle(8,7,1)
     fish = Fish()
 
@@ -68,7 +68,14 @@ def main():
             # Calculate the angle 
             angle_to_mouse = (round(math.degrees(math.atan2(delta.y, delta.x))) + 360) % 360
 
-            
+
+
+            #Tracks a star every second
+            if(random.randint(0,5) != 1): #This line is for balancing the enemy. Moves only if not 1 is selected
+                pickle_to_cat_path = astar(BOARD, (pickle.x, pickle.y) ,(cat.x,cat.y))
+                if len(pickle_to_cat_path) > 1:
+                    pickle.move(pickle_to_cat_path[1][0],pickle_to_cat_path[1][1])
+
             
 
             if ( clock > move_next_time ): 
@@ -110,6 +117,10 @@ def main():
 
             # flip() the display to put your work on screen
             pygame.display.flip()
+        pygame.draw.line(SCREEN, (255,255,255), player_center, mouse_pos, 3)
+
+        all_sprite.update()
+        all_sprite.draw(SCREEN)
 
             # limits FPS to 60
             # dt is delta time in seconds since last frame, used for framerate-
@@ -136,6 +147,16 @@ def main():
 
             # Update the display
             pygame.display.flip()
+
+
+        # flip() the display to put your work on screen
+        pygame.display.flip()
+
+        # limits FPS to 60
+        # dt is delta time in seconds since last frame, used for framerate-
+        # independent physics.
+        dt = CLOCK.tick(60) / 1000
+
 
 if __name__ == '__main__':
     main()
