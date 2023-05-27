@@ -72,4 +72,3 @@ def main_menu():
 
 main_menu()
 pygame.quit()
-quit()
