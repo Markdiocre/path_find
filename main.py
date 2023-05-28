@@ -49,9 +49,13 @@ def main():
     pygame.init()
 
     # backgroud music
-    pygame.mixer.music.load("assets/Music.mp3")
+    pygame.mixer.music.load("sounds/Music.mp3")
     pygame.mixer.music.set_volume(0.5)
     pygame.mixer.music.play(-1)
+
+    #hit sound effect
+    pickle_hit_sound = pygame.mixer.Sound("sounds/hit_sound.mp3")
+    cat_dead_sound = pygame.mixer.Sound("sounds/cat_death.mp3") 
 
     # game dimensionsr
 
@@ -106,21 +110,26 @@ def main():
                     elif event.key == pygame.K_q:
                         running = False
 
-        # Game over Screen
+            # Game over Screen
         if not is_paused and is_dead:
             settings.blit(background_image, (0, 0))
             font = pygame.font.Font("assets/font.ttf", 15)
             game_over = font.render("Game Over", True, 'red')
-            score_text = font.render(
-                "Your Score: " + str(score), True, 'white')
-            retry_text = font.render(
-                "Press 'R' to Retry", True, 'yellow')
-            quit_text = font.render(
-                "Press 'Q' to Quit", True, 'yellow')
-            settings.blit(game_over, (S_WIDTH // 2 - 80, S_HEIGHT // 2 - 90))
-            settings.blit(score_text, (S_WIDTH // 2 - 80, S_HEIGHT // 2 - 65))
-            settings.blit(retry_text, (S_WIDTH // 2 - 80, S_HEIGHT // 2 - 40))
-            settings.blit(quit_text, (S_WIDTH // 2 - 80, S_HEIGHT // 2 - 15))
+            score_text = font.render("Your Score: " + str(score), True, 'white')
+            retry_text = font.render("Press 'R' to Retry", True, 'yellow')
+            quit_text = font.render("Press 'Q' to Quit", True, 'yellow')
+
+            # Get the text surfaces and their respective rectangles
+            game_over_rect = game_over.get_rect(center=(S_WIDTH // 2, S_HEIGHT // 2 - 90))
+            score_text_rect = score_text.get_rect(center=(S_WIDTH // 2, S_HEIGHT // 2 - 65))
+            retry_text_rect = retry_text.get_rect(center=(S_WIDTH // 2, S_HEIGHT // 2 - 40))
+            quit_text_rect = quit_text.get_rect(center=(S_WIDTH // 2, S_HEIGHT // 2 - 15))
+
+            # Blit the text surfaces onto the settings surface using the rectangles
+            settings.blit(game_over, game_over_rect)
+            settings.blit(score_text, score_text_rect)
+            settings.blit(retry_text, retry_text_rect)
+            settings.blit(quit_text, quit_text_rect)
 
 
         if not is_paused and not is_dead:
@@ -157,7 +166,7 @@ def main():
                         pickle.move(
                             pickle_to_cat_path[1][0], pickle_to_cat_path[1][1])
 
-                # If the cat ate the player, the player will teleport elsewhere
+                # If the pickle hits the player, the player will teleport elsewhere
                 if ((cat.x, cat.y) == (pickle.x, pickle.y)):
                     out_of_pos = True
                     while out_of_pos:
@@ -169,11 +178,14 @@ def main():
                             cat.y = y
                             out_of_pos = False
 
+                    
+
                     if (health_bar.hp - 1 <= 0):
                         is_dead = True
+                        cat_dead_sound.play()
                     else:
                         health_bar.hp = health_bar.hp - 1
-
+                        pickle_hit_sound.play()
                 score += 1
                 move_next_time = clock + 500
 

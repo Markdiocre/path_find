@@ -4,6 +4,7 @@ import os
 
 game_folder = os.path.dirname(__file__)
 img_folder = os.path.join(game_folder, "assets")
+sound_folder = os.path.join(game_folder, "sounds")
 
 class Cat(pygame.sprite.Sprite):
     
@@ -25,7 +26,7 @@ class Cat(pygame.sprite.Sprite):
 
         if self.hits_grid(self.x, self.y - self.speed):
             self.y += -self.speed
-        
+            
 
     def move_down(self):
         if self.y + self.speed >= len(BOARD[0]):
@@ -36,7 +37,7 @@ class Cat(pygame.sprite.Sprite):
 
         if self.hits_grid(self.x, self.y + self.speed):
             self.y += self.speed
-
+            
 
 
     def move_left(self):
@@ -47,7 +48,7 @@ class Cat(pygame.sprite.Sprite):
 
         if self.hits_grid(self.x - self.speed,self.y):
             self.x -= self.speed
-
+            
 
     def move_right(self):
         if self.x + self.speed >= len(BOARD):
@@ -56,7 +57,7 @@ class Cat(pygame.sprite.Sprite):
 
         if self.hits_grid(self.x + self.speed,self.y):
             self.x += self.speed
-
+            
 
     def hits_grid(self, x, y):
         if BOARD[x][y] == 1:
@@ -113,3 +114,5 @@ class Fish(pygame.sprite.Sprite):
         self.rect.x = self.x - (TILESIZE/2)
         self.rect.y = self.y - (TILESIZE/2)
         
+pygame.mixer.init()
+hit_sound = pygame.mixer.Sound(os.path.join(sound_folder, "hit_sound.mp3"))
