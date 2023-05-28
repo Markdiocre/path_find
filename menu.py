@@ -20,8 +20,7 @@ def text_format(message, textFont, textSize, textColor):
 font = "assets/font.ttf"
 
 clock = pygame.time.Clock()
-FPS=60
-
+FPS=30
 def main_menu():
 
     menu=True

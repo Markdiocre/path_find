@@ -110,21 +110,26 @@ def main():
                     elif event.key == pygame.K_q:
                         running = False
 
-        # Game over Screen
+            # Game over Screen
         if not is_paused and is_dead:
             settings.blit(background_image, (0, 0))
             font = pygame.font.Font("assets/font.ttf", 15)
             game_over = font.render("Game Over", True, 'red')
-            score_text = font.render(
-                "Your Score: " + str(score), True, 'white')
-            retry_text = font.render(
-                "Press 'R' to Retry", True, 'yellow')
-            quit_text = font.render(
-                "Press 'Q' to Quit", True, 'yellow')
-            settings.blit(game_over, (S_WIDTH // 2 - 80, S_HEIGHT // 2 - 90))
-            settings.blit(score_text, (S_WIDTH // 2 - 80, S_HEIGHT // 2 - 65))
-            settings.blit(retry_text, (S_WIDTH // 2 - 80, S_HEIGHT // 2 - 40))
-            settings.blit(quit_text, (S_WIDTH // 2 - 80, S_HEIGHT // 2 - 15))
+            score_text = font.render("Your Score: " + str(score), True, 'white')
+            retry_text = font.render("Press 'R' to Retry", True, 'yellow')
+            quit_text = font.render("Press 'Q' to Quit", True, 'yellow')
+
+            # Get the text surfaces and their respective rectangles
+            game_over_rect = game_over.get_rect(center=(S_WIDTH // 2, S_HEIGHT // 2 - 90))
+            score_text_rect = score_text.get_rect(center=(S_WIDTH // 2, S_HEIGHT // 2 - 65))
+            retry_text_rect = retry_text.get_rect(center=(S_WIDTH // 2, S_HEIGHT // 2 - 40))
+            quit_text_rect = quit_text.get_rect(center=(S_WIDTH // 2, S_HEIGHT // 2 - 15))
+
+            # Blit the text surfaces onto the settings surface using the rectangles
+            settings.blit(game_over, game_over_rect)
+            settings.blit(score_text, score_text_rect)
+            settings.blit(retry_text, retry_text_rect)
+            settings.blit(quit_text, quit_text_rect)
 
 
         if not is_paused and not is_dead:
