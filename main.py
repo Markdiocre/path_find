@@ -53,6 +53,10 @@ def main():
     pygame.mixer.music.set_volume(0.5)
     pygame.mixer.music.play(-1)
 
+    #hit sound effect
+    pickle_hit_sound = pygame.mixer.Sound("sounds/hit_sound.mp3")
+    cat_dead_sound = pygame.mixer.Sound("sounds/cat_death.mp3") 
+
     # game dimensionsr
 
     running = True
@@ -157,7 +161,7 @@ def main():
                         pickle.move(
                             pickle_to_cat_path[1][0], pickle_to_cat_path[1][1])
 
-                # If the cat ate the player, the player will teleport elsewhere
+                # If the pickle hits the player, the player will teleport elsewhere
                 if ((cat.x, cat.y) == (pickle.x, pickle.y)):
                     out_of_pos = True
                     while out_of_pos:
@@ -169,11 +173,14 @@ def main():
                             cat.y = y
                             out_of_pos = False
 
+                    
+
                     if (health_bar.hp - 1 <= 0):
                         is_dead = True
+                        cat_dead_sound.play()
                     else:
                         health_bar.hp = health_bar.hp - 1
-
+                        pickle_hit_sound.play()
                 score += 1
                 move_next_time = clock + 500
 
